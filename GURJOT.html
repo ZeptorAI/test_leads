@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vapi Demo</title>
+</head>
+<body class="flex items-center justify-center h-screen bg-gray-100">
+  <div style="text-align:center;">
+    <h1>Vapi Inbound Agent Demo</h1>
+    <button id="startBtn">Start Call</button>
+    <button id="endBtn">End Call</button>
+    <pre id="log"></pre>
+  </div>
+
+  <script type="module">
+    import Vapi from "https://cdn.skypack.dev/@vapi-ai/web";
+
+    // Init Vapi
+    const vapi = new Vapi("921e33d9-b09b-489e-96e4-5d4a8c9d628a");
+
+    const logEl = document.getElementById("log");
+    function log(msg) {
+      logEl.textContent += msg + "\n";
+    }
+
+    document.getElementById("startBtn").addEventListener("click", () => {
+      vapi.start("95a8d98d-9fe7-4c80-b313-d7ec4eeab1c3");
+    });
+
+    document.getElementById("endBtn").addEventListener("click", () => {
+      vapi.stop();
+    });
+
+    // Events
+    vapi.on("call-start", () => log("📞 Call started"));
+    vapi.on("call-end", () => log("❌ Call ended"));
+    vapi.on("message", (message) => {
+      if (message.type === "transcript") {
+        log(`${message.role}: ${message.transcript}`);
+      }
+    });
+  </script>
+</body>
+</html>
