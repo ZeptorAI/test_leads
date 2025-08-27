@@ -1,39 +1,19 @@
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vapi Assistant Demo</title>
+    <title>Your Website</title>
 </head>
 <body>
-  <h1 style="text-align:center;">🎤 Vapi Inbound Agent Demo</h1>
-  <p style="text-align:center;">Click the floating button to start a call with your assistant.</p>
-
-  <!-- Vapi Voice Widget -->
-  <script>
-    var vapiInstance = null;
-    const assistant = "95a8d98d-9fe7-4c80-b313-d7ec4eeab1c3"; // your assistant ID
-    const apiKey = "921e33d9-b09b-489e-96e4-5d4a8c9d628a";   // your public API key
-    const buttonConfig = {
-      position: "bottom-right", // you can change to "bottom-left"
-    };
-
-    (function (d, t) {
-      var g = document.createElement(t),
-        s = d.getElementsByTagName(t)[0];
-      g.src =
-        "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
-      g.defer = true;
-      g.async = true;
-      s.parentNode.insertBefore(g, s);
-
-      g.onload = function () {
-        vapiInstance = window.vapiSDK.run({
-          apiKey: apiKey,       // mandatory
-          assistant: assistant, // mandatory
-          config: buttonConfig, // optional
-        });
-      };
-    })(document, "script");
-  </script>
+    <!-- Your website content -->
+    
+    <!-- Add Vapi Widget -->
+    <script src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js" async type="text/javascript"></script>
+    
+    <vapi-widget
+      public-key="921e33d9-b09b-489e-96e4-5d4a8c9d628a"
+      assistant-id="95a8d98d-9fe7-4c80-b313-d7ec4eeab1c3"
+      mode="voice"
+      theme="light"
+    ></vapi-widget>
 </body>
 </html>
