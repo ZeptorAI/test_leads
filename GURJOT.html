@@ -1,45 +1,39 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vapi Demo</title>
+  <title>Vapi Assistant Demo</title>
 </head>
-<body class="flex items-center justify-center h-screen bg-gray-100">
-  <div style="text-align:center;">
-    <h1>Vapi Inbound Agent Demo</h1>
-    <button id="startBtn">Start Call</button>
-    <button id="endBtn">End Call</button>
-    <pre id="log"></pre>
-  </div>
+<body>
+  <h1 style="text-align:center;">🎤 Vapi Inbound Agent Demo</h1>
+  <p style="text-align:center;">Click the floating button to start a call with your assistant.</p>
 
-  <script type="module">
-    import Vapi from "https://cdn.skypack.dev/@vapi-ai/web";
+  <!-- Vapi Voice Widget -->
+  <script>
+    var vapiInstance = null;
+    const assistant = "95a8d98d-9fe7-4c80-b313-d7ec4eeab1c3"; // your assistant ID
+    const apiKey = "921e33d9-b09b-489e-96e4-5d4a8c9d628a";   // your public API key
+    const buttonConfig = {
+      position: "bottom-right", // you can change to "bottom-left"
+    };
 
-    // Init Vapi
-    const vapi = new Vapi("921e33d9-b09b-489e-96e4-5d4a8c9d628a");
+    (function (d, t) {
+      var g = document.createElement(t),
+        s = d.getElementsByTagName(t)[0];
+      g.src =
+        "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
+      g.defer = true;
+      g.async = true;
+      s.parentNode.insertBefore(g, s);
 
-    const logEl = document.getElementById("log");
-    function log(msg) {
-      logEl.textContent += msg + "\n";
-    }
-
-    document.getElementById("startBtn").addEventListener("click", () => {
-      vapi.start("95a8d98d-9fe7-4c80-b313-d7ec4eeab1c3");
-    });
-
-    document.getElementById("endBtn").addEventListener("click", () => {
-      vapi.stop();
-    });
-
-    // Events
-    vapi.on("call-start", () => log("📞 Call started"));
-    vapi.on("call-end", () => log("❌ Call ended"));
-    vapi.on("message", (message) => {
-      if (message.type === "transcript") {
-        log(`${message.role}: ${message.transcript}`);
-      }
-    });
+      g.onload = function () {
+        vapiInstance = window.vapiSDK.run({
+          apiKey: apiKey,       // mandatory
+          assistant: assistant, // mandatory
+          config: buttonConfig, // optional
+        });
+      };
+    })(document, "script");
   </script>
 </body>
 </html>
